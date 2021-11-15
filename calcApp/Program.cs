@@ -24,6 +24,7 @@ public static class Program {
 
             var walker = new ParseTreeWalker();
             walker.Walk(new Evaluator(), tree);
+            walker.Walk(new BetterEvaluator(), tree);
         }
     }
 }
@@ -66,6 +67,22 @@ public class Evaluator : CalcBaseListener {
         var left = _stack.Pop();
         _stack.Push(left * right);
     }
-
 }
 
+public class BetterEvaluator : CalcBaseListener {
+    public override void ExitProg(CalcParser.ProgContext context) {
+        Console.WriteLine($"Better Listner calculated: {context.expr().exprValue}");
+    }
+
+    public override void ExitInt(CalcParser.IntContext context) {
+        context.exprValue = int.Parse(context.INT().GetText());
+    }
+
+    public override void ExitAdd(CalcParser.AddContext context) {
+        context.exprValue = context.expr(0).exprValue + context.expr(1).exprValue;
+    }
+
+    public override void ExitMul(CalcParser.MulContext context) {
+        context.exprValue = context.expr(0).exprValue * context.expr(1).exprValue;
+    }
+}

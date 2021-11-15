@@ -2,7 +2,8 @@ grammar Calc;
 
 prog: expr ;
 
-expr:   expr MUL expr   # Mul
+expr returns [int exprValue]
+    :   expr MUL expr   # Mul
     |   expr ADD expr   # Add
     |   INT             # Int
     ;

@@ -131,6 +131,7 @@ public partial class CalcParser : Parser {
 	}
 
 	public partial class ExprContext : ParserRuleContext {
+		public int exprValue;
 		public ExprContext(ParserRuleContext parent, int invokingState)
 			: base(parent, invokingState)
 		{
@@ -140,6 +141,7 @@ public partial class CalcParser : Parser {
 		public ExprContext() { }
 		public virtual void CopyFrom(ExprContext context) {
 			base.CopyFrom(context);
+			this.exprValue = context.exprValue;
 		}
 	}
 	public partial class AddContext : ExprContext {
